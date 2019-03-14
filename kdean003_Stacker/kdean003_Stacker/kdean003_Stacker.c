@@ -16,7 +16,6 @@ unsigned char i = 0;
 unsigned char count = 0;
 unsigned char receive = 0x00;
 short score = 0;
-short high_score = 0;
 
 unsigned char done = 0;
 unsigned char direction = 0; // move current row left or right
@@ -94,7 +93,7 @@ void write_score(){
 	nokia_lcd_set_cursor(0, 35);
 	nokia_lcd_write_string("High Score:", 1);
 	nokia_lcd_set_cursor(70, 35);
-	nokia_lcd_write_char(eeprom_read_byte(1) + '0', 1);
+	nokia_lcd_write_char(eeprom_read_byte((uint8_t*)46) + '0', 1);
 	nokia_lcd_render();
 }
 
@@ -116,7 +115,7 @@ int SMTick1(int state){
 					state = SM1_stop_pressed;
 				}
 				if(receive == 3){
-					eeprom_write_byte(1, 0);
+					eeprom_write_byte((uint8_t*)46, 0);
 					write_score();
 				}
 			}	
@@ -181,8 +180,8 @@ int SMTick1(int state){
 			break;
 			
 		case SM1_gameover:
-			if (score > eeprom_read_byte(1)) {
-				eeprom_write_byte(1, score);
+			if (score > eeprom_read_byte((uint8_t*)46)) {
+				eeprom_write_byte((uint8_t*)46, score);
 			}
 			break;
 	}
@@ -219,6 +218,9 @@ int main()
 	DDRB = 0xFF; PORTB = 0x00; // Initialize DDRB to outputs
 	DDRC = 0xFF; PORTC = 0x00; // Initialize DDRC to outputs
 	DDRD = 0x03; PORTD = 0xFC;
+	
+	if(eeprom_read_byte((uint8_t*)46) < 0 || eeprom_read_byte((uint8_t*)46) > 9)
+		eeprom_write_byte((uint8_t*)46, 0);
 	
 	// Period for the tasks
 	unsigned long int SMTick1_calc = 1;
@@ -259,7 +261,7 @@ int main()
 	TimerOn();
 	
 	initUSART(0);
-	eeprom_write_byte(1, score);
+	
 	nokia_lcd_init();
 	nokia_lcd_clear();
 	nokia_lcd_write_string("Welcome to",1);
@@ -271,7 +273,7 @@ int main()
 	nokia_lcd_set_cursor(0, 35);
 	nokia_lcd_write_string("High Score: ", 1);
 	nokia_lcd_set_cursor(70, 35);
-	nokia_lcd_write_char(eeprom_read_byte(1) + '0', 1);
+	nokia_lcd_write_char(eeprom_read_byte((uint8_t*)46) + '0', 1);
 	nokia_lcd_render();
 	
 	ledmatrix88_init();
