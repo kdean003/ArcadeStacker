@@ -1,0 +1,23 @@
+==================================================
+ledmatrix88 lib
+==================================================
+= Copyright (c) Davide Gironi, 2013              =
+= http://davidegironi.blogspot.it/               =
+==================================================
+
+
+This library implements a simple 8x8 led matrix for AVR Atmega.
+It uses 16 output ports for the full 8x8 led matrix, but it can be reduced
+to a smaller matrix, using less ports.
+
+Setup parameters are stored in file ledmatrix88.h
+
+
+Devel Notes
+-----------
+This library was developed on Eclipse, built with avr-gcc on Atmega8 @ 1MHz.
+
+
+License
+-------
+Please refer to LICENSE file for licensing information.
