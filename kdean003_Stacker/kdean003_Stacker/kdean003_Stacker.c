@@ -15,7 +15,7 @@ unsigned char t = 0;
 unsigned char i = 0;
 unsigned char count = 0;
 unsigned char receive = 0x00;
-short score = 0;
+unsigned char score = 0;
 
 unsigned char done = 0;
 unsigned char direction = 0; // move current row left or right
