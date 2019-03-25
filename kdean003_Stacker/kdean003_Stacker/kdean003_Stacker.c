@@ -20,7 +20,7 @@ unsigned char score = 0;
 unsigned char done = 0;
 unsigned char direction = 0; // move current row left or right
 
-unsigned char column_val = 0b10000000; // sets the pattern displayed on columns
+unsigned char row_sel = 0b10000000; // sets the pattern displayed on columns
 unsigned char column_sel = 0b11110000; // grounds column to display pattern
 
 unsigned char row[8][2] = {
@@ -41,7 +41,7 @@ void run_matrix(){
 		i++;
 		if(i == 9)
 		i = 0;
-		column_val = row[i-1][0];
+		row_sel = row[i-1][0];
 		column_sel = row[i-1][1];
 	}
 }
@@ -143,7 +143,7 @@ int SMTick1(int state){
 			timer = 200;
 			done = 0;
 			direction = 0;
-			column_val = 0b10000000; 
+			row_sel = 0b10000000; 
 			column_sel = 0b11110000;
 			row[0][0] = 0b10000000; row[0][1] = 0b11110000;
 			row[1][0] = 0b01000000; row[1][1] = 0b11111111;
@@ -186,7 +186,7 @@ int SMTick1(int state){
 			break;
 	}
 	t++;
-	ledmatrix88_setrow(column_val);
+	ledmatrix88_setrow(row_sel);
 	ledmatrix88_setcol(column_sel);
 	ledmatrix88_print();
 	return state;
